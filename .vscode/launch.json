@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Generator",
+            "request": "launch",
+            "mainClass": "Generator",
+            "projectName": "PrimeNumbersGenerator_40e48e51"
+        }
+    ]
+}
