@@ -6,9 +6,9 @@ import java.util.Random;
 
 public class Generator {
 
-    private static final long defaultKeyLength = 4096; 
+    private static final long defaultKeyLength = 20000; 
     private static Random random = new Random(); 
-    private static final int maxFactor = (int) Math.pow(2, 8); 
+    private static final int maxFactor = (int) Math.pow(2, 10); 
 
     private static boolean isPrimeNumber(int x) {
         for(int i = 2; i * i <= x ; i++) {

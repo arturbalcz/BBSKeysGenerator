@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - StatisticTests",
+            "request": "launch",
+            "mainClass": "StatisticTests",
+            "projectName": "RSAKeysGenerator_277c6936"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Generator",
+            "request": "launch",
+            "mainClass": "Generator",
+            "projectName": "RSAKeysGenerator_277c6936"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Generator",
             "request": "launch",
             "mainClass": "Generator",
