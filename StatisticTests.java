@@ -40,43 +40,73 @@ public class StatisticTests {
 
     }
 
+    private static int countSeriesLength(char[] keyArray, char c, int startIndex) {
+        int length = 0; 
+        for (int i = startIndex; i < keyArray.length; i++) {
+            if(keyArray[i] == c) length++; 
+            else return length; 
+        }
+
+        return length; 
+    }
+
     private static boolean bitSeriesLengthTest(String key) {
-        Pattern oneBitSeriesPattern = Pattern.compile("010|101");
-        Pattern twoBitsSeriesPattern = Pattern.compile("01{2}0|10{2}1");
-        Pattern threeBitsSeriesPattern = Pattern.compile("01{3}0|10{3}1");
-        Pattern fourBitsSeriesPattern = Pattern.compile("01{4}0|10{4}1");
-        Pattern fiveBitsSeriesPattern = Pattern.compile("01{5}0|10{5}1");
-        Pattern sixAndMoreBitsSeriesPattern = Pattern.compile("01{6,}0|10{6,}1");
+        char[] keyArray = key.toCharArray(); 
 
-        long oneBitSeriesCount = oneBitSeriesPattern.matcher(key).results().count(); 
-        long twoBitsSeriesCount = twoBitsSeriesPattern.matcher(key).results().count(); 
-        long threeBitsSeriesCount = threeBitsSeriesPattern.matcher(key).results().count(); 
-        long fourBitsSeriesCount = fourBitsSeriesPattern.matcher(key).results().count(); 
-        long fiveBitsSeriesCount = fiveBitsSeriesPattern.matcher(key).results().count(); 
-        long sixBitsSeriesCount = sixAndMoreBitsSeriesPattern.matcher(key).results().count(); 
+        int[] bitOneOccurrencesArray = new int[6]; 
+        int[] bitZeroOccurrencesArray = new int[6];
+        
+        int currentSeriesLength = 0;
 
-        System.out.println(oneBitSeriesCount);
-        System.out.println(twoBitsSeriesCount);
-        System.out.println(threeBitsSeriesCount);
-        System.out.println(fourBitsSeriesCount);
-        System.out.println(fiveBitsSeriesCount);
-        System.out.println(sixBitsSeriesCount);
+        for (int i = 0; i < keyArray.length; i+=currentSeriesLength) {
 
-        System.out.println(oneBitSeriesCount + 2*twoBitsSeriesCount + 3*threeBitsSeriesCount + 4*fourBitsSeriesCount + 5*fiveBitsSeriesCount + 6*sixBitsSeriesCount);
+            if(keyArray[i] == '1') {
+                currentSeriesLength = countSeriesLength(keyArray, '1', i); 
+                if(currentSeriesLength < 6) bitOneOccurrencesArray[currentSeriesLength-1]++; 
+                else bitOneOccurrencesArray[5]++; 
+            }
+            
+            else if(keyArray[i] == '0') {
+                currentSeriesLength = countSeriesLength(keyArray, '0', i); 
+                if(currentSeriesLength < 6) bitZeroOccurrencesArray[currentSeriesLength-1]++; 
+                else bitZeroOccurrencesArray[5]++; 
+            }
+        }
 
-        if(oneBitSeriesCount < 2315 || oneBitSeriesCount > 2685) return false; 
-        if(twoBitsSeriesCount < 1114 || twoBitsSeriesCount > 1386) return false; 
-        if(threeBitsSeriesCount < 527 || threeBitsSeriesCount > 723) return false; 
-        if(fourBitsSeriesCount < 240 || fourBitsSeriesCount > 384) return false; 
-        if(fiveBitsSeriesCount < 103 || fiveBitsSeriesCount > 209) return false; 
-        if(sixBitsSeriesCount < 103 || sixBitsSeriesCount > 209) return false; 
+        // System.out.println(bitOneOccurrencesArray[0]);
+        // System.out.println(bitOneOccurrencesArray[1]);
+        // System.out.println(bitOneOccurrencesArray[2]);
+        // System.out.println(bitOneOccurrencesArray[3]);
+        // System.out.println(bitOneOccurrencesArray[4]);
+        // System.out.println(bitOneOccurrencesArray[5]);
+
+        // System.out.println(bitZeroOccurrencesArray[0]);
+        // System.out.println(bitZeroOccurrencesArray[1]);
+        // System.out.println(bitZeroOccurrencesArray[2]);
+        // System.out.println(bitZeroOccurrencesArray[3]);
+        // System.out.println(bitZeroOccurrencesArray[4]);
+        // System.out.println(bitZeroOccurrencesArray[5]);
+
+        if(bitOneOccurrencesArray[0] < 2315 || bitOneOccurrencesArray[0] > 2685) return false; 
+        if(bitOneOccurrencesArray[1] < 1114 || bitOneOccurrencesArray[1] > 1386) return false; 
+        if(bitOneOccurrencesArray[2] < 527 || bitOneOccurrencesArray[2] > 723) return false; 
+        if(bitOneOccurrencesArray[3] < 240 || bitOneOccurrencesArray[3] > 384) return false; 
+        if(bitOneOccurrencesArray[4] < 103 || bitOneOccurrencesArray[4] > 209) return false; 
+        if(bitOneOccurrencesArray[5] < 103 || bitOneOccurrencesArray[5] > 209) return false; 
+
+        if(bitZeroOccurrencesArray[0] < 2315 || bitZeroOccurrencesArray[0] > 2685) return false; 
+        if(bitZeroOccurrencesArray[1] < 1114 || bitZeroOccurrencesArray[1] > 1386) return false; 
+        if(bitZeroOccurrencesArray[2] < 527 || bitZeroOccurrencesArray[2] > 723) return false; 
+        if(bitZeroOccurrencesArray[3] < 240 || bitZeroOccurrencesArray[3] > 384) return false; 
+        if(bitZeroOccurrencesArray[4] < 103 || bitZeroOccurrencesArray[4] > 209) return false; 
+        if(bitZeroOccurrencesArray[5] < 103 || bitZeroOccurrencesArray[5] > 209) return false; 
 
         return true; 
     }
 
     private static boolean pokerTest(String key) {
         char[] keyArray = key.toCharArray(); 
-        int[] sAtIArray = new int[16]; 
+        int[] occurrencesArray = new int[16]; 
 
         int sum = 0; 
         for (int i = 0; i < keyArray.length - 3; i+=4) {
@@ -86,10 +116,10 @@ public class StatisticTests {
             }
 
             int calculatedValue = calculateValueFromBits(bits); 
-            sAtIArray[calculatedValue]++; 
+            occurrencesArray[calculatedValue]++; 
         }
 
-        for (int i : sAtIArray) {
+        for (int i : occurrencesArray) {
             sum += i*i; 
         }
 
