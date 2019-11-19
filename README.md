@@ -1,7 +1,7 @@
-# RSAKeysGenerator
+# BBSKeysGenerator
 ### Project for CS studies 
 
-Simple program for generating RSA keys  
+Simple program for generating BBS keys  
 The default length of random prime numbers p and q is 20 bits  
 The default generated key length is 20000 bits  
 
